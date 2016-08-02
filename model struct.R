@@ -28,6 +28,8 @@ C <- rep(0,20)
 M <- cbind(A,B,C)
 
 state.trans(origin, des, params, M)
+
+
 state.trans(origin, 2, .5, M)
 state.trans(origin, 3, .5, M)
 
