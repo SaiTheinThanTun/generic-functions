@@ -9,8 +9,8 @@ state.trans <- function(origin, new.states, params, s.matrix){
   #dimension check
   if(ncol(s.matrix) <  max(c(origin, new.states))) stop("no such states in the input matrix") #stop if the dim requested is higher than input matrix
   
-  ORIGIN <- s.matrix[,origin] #initializing a new vector for calculation
-  lo <- length(ORIGIN) #length of origin
+  origin_v <- s.matrix[,origin] #initializing a new vector for calculation
+  lo <- length(origin_v) #length of origin
   org.s.matrix <- s.matrix    #keeping the original matrix
   
   
@@ -18,7 +18,8 @@ state.trans <- function(origin, new.states, params, s.matrix){
     probs <- rep(1-exp(-params[which(new.states==i)]*1), lo) #calculating probs for transition
     rand <- runif(lo)
     
-    s.matrix[,i] <- org.s.matrix[,i]+(ORIGIN*(rand<probs))
+    s.matrix[,i] <- org.s.matrix[,i]+(origin_v*(rand<probs))
+    s.matrix[,origin] <- org.s.matrix[,origin]-(origin_v*(rand<probs))
   }
   s.matrix
 }
