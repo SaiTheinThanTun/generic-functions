@@ -32,7 +32,11 @@ state.trans(origin, des, params, M)
 
 state.trans(origin, 2, .5, M)
 state.trans(origin, 3, .5, M)
+state.trans(2, c(1,3), c(.5,.8), M)
 
+D <- c(rep(0,10),rep(1:0,5))
+MD <- cbind(M,D)
+state.trans(1,c(3,4),c(.6,.3),MD)
 
 params <- c(.2,.5,.7)
 #testing for cummulative probs
