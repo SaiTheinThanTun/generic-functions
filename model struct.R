@@ -38,6 +38,11 @@ D <- c(rep(0,10),rep(1:0,5))
 MD <- cbind(M,D)
 state.trans(1,c(3,4),c(.6,.3),MD)
 
+aaa <- {origin=1,des=c(3,4),params=c(.6,.3),matrix=MD}
+bbb <- c(origin=1,new.states=c(3,4),params=c(.6,.3))
+state.trans(bbb,s.matrix=MD)
+
+
 params <- c(.2,.5,.7)
 #testing for cummulative probs
 probs <- 1-exp(-params*1) # calc probs from rates
