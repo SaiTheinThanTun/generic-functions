@@ -35,7 +35,7 @@ state.trans <- function(origin, new.states, params, s.matrix){
     
     s.matrix[,i] <- s.matrix[,i]+(s.matrix[,origin]*(rand<probs_for)*(rand>last_prob)) #origin is used here since ??
     s.matrix[,origin] <- s.matrix[,origin]-(s.matrix[,origin]*(rand<probs_for)*(rand>last_prob))
-    s.matrix[,-c(i,origin)] <- 0
+    #s.matrix[,-c(i,origin)] <- 0 #might not do this afterall!
     last_prob <- probs_for
   }
   s.matrix
