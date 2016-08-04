@@ -43,6 +43,11 @@ bbb <- c(origin=1,new.states=c(3,4),params=c(.6,.3))
 state.trans(bbb,s.matrix=MD)
 
 
+syn_pop(c(20,5,5))
+test <- syn_pop(c(5,3,2,1))
+state.trans(1,c(3,4),c(.2,.5),test)
+
+
 params <- c(.2,.5,.7)
 #testing for cummulative probs
 probs <- 1-exp(-params*1) # calc probs from rates

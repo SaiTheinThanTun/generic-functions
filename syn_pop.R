@@ -5,7 +5,7 @@
 #sum of the vector gives the total population size (which is also total rows)
 #proportions of each state is calculated by dividing the vector with total population size
 
-syn_pop <- function(states){ #states is the vector variable, each element represent the number of individuals belonging to that state (indexed)
+syn_pop <- function(states, shuffle=FALSE){ #states is the vector variable, each element represent the number of individuals belonging to that state (indexed)
   #this is assuming that an individual can have only one state at a single timestep
   
   total.pop <- sum(states) #total population size
@@ -18,5 +18,7 @@ syn_pop <- function(states){ #states is the vector variable, each element repres
     
     result <- cbind(result, tmp, deparse.level = 0)
   }
-  result
+  
+  if(shuffle==T){ result[sample(nrow(result)),]}
+  else result
 }
