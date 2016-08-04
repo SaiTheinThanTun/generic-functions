@@ -1,4 +1,22 @@
-#model struct 2
+#this function is used 
+#even if there's no terminal state, such as in SIRS models, 
+#transitions from R to S has to be made first
+
+
+#next problem
+#testing for transitions to multiple states from a single state
+#example
+# in SEIRS system, E may get to I or R (without being infectious)
+# T1: E -> I, E -> R
+# T2: I -> R
+# original I is c(0,0,0,0,0,0,1)
+# New I from T1:c(0,0,1,1,0,0,1) #last I is the original I
+# New I after T2: c(0,0,0,0,0,0,1)
+# I have to make 
+# c(0,0,0,0,0,0,1)+ c(0,0,1,1,0,0,1) == c(0,0,1,1,0,0,1)
+# test if their sum is >= 1. it'll give a logical matrix. add 0 to the matrix and you'll get back a numeric matrix
+
+#New R from T1:c(0,0,1,1,0,0,1) #last R is the original R
 
 state.trans <- function(origin, new.states, params, s.matrix){
   #origin   #single number
@@ -21,13 +39,6 @@ state.trans <- function(origin, new.states, params, s.matrix){
   cum_probs <- cumsum(c(sum_compliments,probs)/maxprobs)
   
   last_prob <- cum_probs[1]
-  
-  ##issue in combining back the matrices
-  #trying to work on combining the new states transitions. the plan is to have the function state.trans to take in the whole matrix 
-  #but work only on the states that it;s transitioning to and from, and outputing only that, and 
-  #leaving the other states by having them 0. 
-  #by summing them all up, you'll get back all the states in a matrix with the same dimension.
-  
   
   for(i in new.states){
     probs_for <- cum_probs[which(new.states==i)+1] #calculating probs_for for transition
