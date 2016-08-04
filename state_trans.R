@@ -22,13 +22,20 @@ state.trans <- function(origin, new.states, params, s.matrix){
   
   last_prob <- cum_probs[1]
   
+  ##issue in combining back the matrices
+  #trying to work on combining the new states transitions. the plan is to have the function state.trans to take in the whole matrix 
+  #but work only on the states that it;s transitioning to and from, and outputing only that, and 
+  #leaving the other states by having them 0. 
+  #by summing them all up, you'll get back all the states in a matrix with the same dimension.
+  
+  
   for(i in new.states){
     probs_for <- cum_probs[which(new.states==i)+1] #calculating probs_for for transition
     rand <- runif(lo)
     
     s.matrix[,i] <- s.matrix[,i]+(s.matrix[,origin]*(rand<probs_for)*(rand>last_prob)) #origin is used here since ??
     s.matrix[,origin] <- s.matrix[,origin]-(s.matrix[,origin]*(rand<probs_for)*(rand>last_prob))
-    
+    s.matrix[,-c(i,origin)] <- 0
     last_prob <- probs_for
   }
   s.matrix
