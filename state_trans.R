@@ -18,7 +18,7 @@
 
 #New R from T1:c(0,0,1,1,0,0,1) #last R is the original R
 
-state.trans <- function(origin, new.states, params, s.matrix){
+state_trans <- function(origin, new.states, params, s.matrix){
   #origin   #single number
   #new.states  #a vector of length n (to index the matrix)
   #params #a vector of length m (to calculate the probabilities)
@@ -46,8 +46,8 @@ state.trans <- function(origin, new.states, params, s.matrix){
     
     s.matrix[,i] <- s.matrix[,i]+(s.matrix[,origin]*(rand<probs_for)*(rand>last_prob)) #origin is used here since ??
     s.matrix[,origin] <- s.matrix[,origin]-(s.matrix[,origin]*(rand<probs_for)*(rand>last_prob))
-    #s.matrix[,-c(i,origin)] <- 0 #might not do this afterall!
+    #s.matrix[,-c(new.states,origin)] <- 0 #might not do this afterall!
     last_prob <- probs_for
   }
-  s.matrix
+  s.matrix-org.s.matrix
 }
