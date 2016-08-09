@@ -34,3 +34,12 @@ para <- NA
 for(i in 1:length(listall[[2]][[1]])){
   para <- append(para, eval(parse(text=listall[[2]][[1]][i])))
 }
+
+a <- 3
+b <- 2
+c <- 5
+result <- NA
+formulas <- c("a+b+c","(a*b)+c","(a+b)/c")
+for(i in 1:length(formulas)){
+  result[i] <- eval(parse(text=formulas[i]))
+}
