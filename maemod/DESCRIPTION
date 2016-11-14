@@ -1,0 +1,13 @@
+Package: maemod
+Type: Package
+Title: A simple version of deSolve for a person who is not trained,
+        qualified, or experienced in Differential Equations.
+Version: 0.0.0.0.1
+Author: Sompob Saralamba
+Maintainer: Sompob Saralamba <sompob@tropmedres.ac>
+Description: Zzzz...
+Depends: R (>= 2.15.0), deSolve
+Imports: deSolve
+License: MIT License
+LazyData: TRUE
+Built: R 3.2.5; ; 2016-09-28 06:56:10 UTC; windows
