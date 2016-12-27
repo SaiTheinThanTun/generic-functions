@@ -33,18 +33,19 @@ turn2shinyInputServer <- function(y){
   cat(unlist(a), sep="\n")
 }
 
-#(inputId = "num", label  = "label to show", value = 0)
 
-turn2shinyInputUI <- function(y){
-  a <- lapply(y,function(x) paste("Input(inputId=\"", x,"\", label = \"",x,"\", value = 0),", sep = ""))
-  cat(unlist(a), sep="\n")
+turn2shinyInputUI <- function(x,y,z){
+  a <- mapply(function(x,y,z) paste("Input(inputId=\"", x,"\", label = \"",y,"\", value = ",z,"),", sep = ""),x,y,z)
+  cat(a, sep="\n")
 }
 
 #global function
 turn2shinyInput <- function(x){
   varNames <- extractVar(x)
+  labelNames <- extractLabel(x)
+  values <- extractValue(x)
   turn2shinyInputServer(varNames)
-  turn2shinyInputUI(varNames)
+  turn2shinyInputUI(varNames, labelNames, values)
 }
 
 #example usage
