@@ -11,6 +11,7 @@ maxtime <- 1000
 #parameterizing for ODE
 times <- seq(0, maxtime, by = 1)
 param_ode <- c(lambda = lambda)
+mosquitostates <- c()
 
 #transient values in ODE
 transient_ode <- c("", "", "")
@@ -46,7 +47,7 @@ testfun <- function(t, state, parameters)
 {
   with(as.list(c(state, parameters)),
        {
-         # define variables
+         # define variables ###TIME DEPENDENT variables don't work here!!!!!!!!!
          eval(parse(text = transient_ode))
          
          # rate of change
@@ -57,7 +58,8 @@ testfun <- function(t, state, parameters)
        })
 }
 
-out <-  ode(y = init.pop, times = times, func = testfun,parms = param_ode)
+out <-  ode(y = c(init.pop[-length(init.pop)], mosquitostates), times = times, func = testfun,parms = param_ode)
+#remember to removedeathcompartment from init.pop which is dedicated for IBM
 
 #plot HERE
 plot(result[, 1], type = 'l', col = 'blue', main = paste("IBM VS ODE"))
