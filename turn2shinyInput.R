@@ -16,6 +16,7 @@ extractLabel <- function(x){
   b <- lapply(a,str_trim,side="left") #using apply to trim the list of character vectors
   d <- lapply(b,grep,pattern="^[a-zA-Z]", value=T)  #if the string doesn't start with a variable, discard that string
   e <- sapply(d,str_extract,"#.*") #extracting the comments starting with #
+  #[later version must end in @ where VarType begins]
   e
 }
 
@@ -23,8 +24,18 @@ extractValue <- function(x){
   a <- strsplit(x,"\n") #splitting the entire string by newline character, putting them in a list
   b <- lapply(a,str_trim,side="left") #using apply to trim the list of character vectors
   d <- lapply(b,grep,pattern="^[a-zA-Z]", value=T)  #if the string doesn't start with a variable, discard that string
-  e <- lapply(d,str_extract,"=.*[,#]?") #extracting the values starting with = and ending in ,
+  e <- lapply(d,str_extract,"[=<].*[,#]?") #extracting the values starting with = and ending in ,
   f <- sapply(e,str_extract,"[[:digit:]]+[./]?[[:digit:]]*") #extracting the values
+  f
+}
+
+
+extractVarType <- function(x){
+  a <- strsplit(x,"\n") #splitting the entire string by newline character, putting them in a list
+  b <- lapply(a,str_trim,side="left") #using apply to trim the list of character vectors
+  d <- lapply(b,grep,pattern="^[a-zA-Z]", value=T)  #if the string doesn't start with a variable, discard that string
+  e <- lapply(d,str_extract,"@.*") #extracting the values starting with @ which must be at the end of the comment sentence
+  f <- sapply(e,str_extract,"[[:alpha:]]+") #extracting the values
   f
 }
 
@@ -39,13 +50,20 @@ turn2shinyInputUI <- function(x,y,z){
   cat(a, sep="\n")
 }
 
+turn2shinyInputUIv2 <- function(x,x2,y,z){
+  a <- mapply(function(x,x2,y,z) paste(x2,"Input(inputId=\"", x,"\", label = \"",y,"\", value = ",z,"),", sep = ""),x,x2,y,z)
+  cat(a, sep="\n")
+}
+
 #global function
 turn2shinyInput <- function(x){
   varNames <- extractVar(x)
   labelNames <- extractLabel(x)
   values <- extractValue(x)
+  varTypes <- extractVarType(x)
   turn2shinyInputServer(varNames)
   turn2shinyInputUI(varNames, labelNames, values)
+  turn2shinyInputUIv2(varNames,varTypes,labelNames,values) #v2 includes the use of variable type
 }
 
 #example usage
