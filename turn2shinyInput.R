@@ -25,7 +25,7 @@ extractValue <- function(x){
   b <- lapply(a,str_trim,side="left") #using apply to trim the list of character vectors
   d <- lapply(b,grep,pattern="^[a-zA-Z]", value=T)  #if the string doesn't start with a variable, discard that string
   e <- lapply(d,str_extract,"[=<].*[,#]?") #extracting the values starting with = and ending in ,
-  f <- sapply(e,str_extract,"[[:digit:]]+[./]?[[:digit:]]*") #extracting the values
+  f <- sapply(e,str_extract,"[[:digit:]]+[./]?[Ee]?[+]?[[:digit:]]*") #extracting the values
   f
 }
 
