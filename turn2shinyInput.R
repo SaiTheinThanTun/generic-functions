@@ -13,7 +13,7 @@ extractVar <- function(x){
 
 extractLabel <- function(x){
   a <- strsplit(x,"\n") #splitting the entire string by newline character, putting them in a list
-  b <- lapply(a,str_trim,side="left") #using apply to trim the list of character vectors
+  b <- lapply(a,str_trim,side="both") #using apply to trim the list of character vectors
   d <- lapply(b,grep,pattern="^[a-zA-Z]", value=T)  #if the string doesn't start with a variable, discard that string
   e <- sapply(d,str_extract,"#.*") #extracting the comments starting with #
   #[later version must end in @ where VarType begins]
@@ -69,7 +69,7 @@ turn2shinyInput <- function(x){
 #example usage
 turn2shinyInput("kf = 0.9,            # maximum fatigue due to low proportion testing positive (0 to 1)
     # biological parameters
-    omega = 1/2,         # rate of loss of immunity = 1/(average duration of immunity)
+    omega = 1/2,         # rate of loss of immunity = 1/(average duration of immunity)     
     nuC = 365/10,        # rate of loss of symptoms in the absence of treatment
     nuA = 365/30,        # 1/(duration of super-microscopic asymtomatic infection)
     nuU = 365/120,")
